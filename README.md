@@ -41,7 +41,7 @@ to model targets
         distance = 2.5,
     },
     ```
-    
+    ```
     to ped model
     ```
     { --mt-fishing shop
@@ -63,7 +63,8 @@ to model targets
 ```
 
 # Add to qb-core/shared/items.lua
-´´´
+
+```
 	-- mt-fishing
 	['cana_pesca'] 			 = {['name'] = 'cana_pesca', 				['label'] = 'Fishing Rod', 				['weight'] = 100, 		['type'] = 'item', 		['image'] = 'fishingrod.png', 		['unique'] = false, 		['useable'] = true, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = ''},
 	['isco_pesca'] 			 = {['name'] = 'isco_pesca', 				['label'] = 'Fishing Bait', 				['weight'] = 100, 		['type'] = 'item', 		['image'] = 'fishingbait.png', 		['unique'] = false, 		['useable'] = false, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = ''},
