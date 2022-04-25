@@ -72,3 +72,9 @@ to ped models
 	['peixe_pesca'] 			 = {['name'] = 'peixe_pesca', 				['label'] = 'Fish', 				['weight'] = 100, 		['type'] = 'item', 		['image'] = 'fish.png', 		['unique'] = false, 		['useable'] = false, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = ''},
 	['peixe_exotico_pesca'] 			 = {['name'] = 'peixe_exotico_pesca', 				['label'] = 'Exotic Fish', 				['weight'] = 100, 		['type'] = 'item', 		['image'] = 'fishingshark.png', 		['unique'] = false, 		['useable'] = false, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = ''},
 ```
+
+# Dependencies
+qb-core: https://github.com/qbcore-framework/qb-core 
+qb-target: https://github.com/BerkieBb/qb-target 
+qb-lock: https://github.com/M-Middy/qb-lock 
+qb-menu: https://github.com/qbcore-framework/qb-menu
