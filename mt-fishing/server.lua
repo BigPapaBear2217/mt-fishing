@@ -94,3 +94,12 @@ RegisterNetEvent('mt-fishing:server:VenderPeixe', function()
         TriggerClientEvent('QBCore:Notify', src, "You dont/'t have anything to sell..")
     end
 end)
+
+RegisterNetEvent('mt-fishing:server:RemoverDinheiroAluger', function()
+	local src = source
+	local cash = 'bank'
+	local price = 1000
+	local Player = QBCore.Functions.getPlayer(src)
+		
+	Player.Functions.RemoveMoney(cash, price)
+end)
