@@ -40,10 +40,11 @@ to model targets
         },
         distance = 2.5,
     },
-    ```
-    ```
-    to ped model
-    ```
+    
+ ```
+    
+to ped models
+```
     { --mt-fishing shop
         model = 'a_m_m_eastsa_01',
         coords = vector4(-1592.97, 5202.71, 3.31, 292.61),
