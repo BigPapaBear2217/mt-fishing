@@ -136,7 +136,7 @@ RegisterNetEvent('mt-fishing:client:ComecarPesca', function(data)
             if success then
                 TriggerServerEvent('mt-fishing:server:DarPeixe')
                 ClearPedTasks(ped)
-                DeleteObject(fishingRodHash)
+                DeleteObject(rodHandle)
                 DeleteEntity(fishingRodHash)
             else
                 TriggerServerEvent('mt-fishing:server:PerderIsco')
