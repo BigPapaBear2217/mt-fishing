@@ -35,7 +35,7 @@ RegisterNetEvent('mt-fishing:server:DarPeixe', function(data)
             QBCore.Functions.Notify('You have full pockets.', 'error', 7500)
         end
     else
-        QBCore.Functions.Notify('You dont hit any fish', 'error', 7500)
+        QBCore.Functions.Notify('you dont catch any fish', 'error', 7500)
     end
 end)
 
