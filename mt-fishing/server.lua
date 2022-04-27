@@ -26,16 +26,16 @@ RegisterNetEvent('mt-fishing:server:DarPeixe', function(data)
         if Player.Functions.AddItem("peixe_pesca", quantity) then
             TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["peixe_pesca"], 'add')
         else
-            QBCore.Functions.Notify('You have full pockets.', 'error', 7500)
+            TriggerClientEvent('QBCore:Notify', src, 'You have full pockets.', 'error')
         end  
     elseif prob >= 40 and prob < 80 then
         if Player.Functions.AddItem("peixe_exotico_pesca", quantity) then
             TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["peixe_exotico_pesca"], 'add')
         else
-            QBCore.Functions.Notify('You have full pockets.', 'error', 7500)
+            TriggerClientEvent('QBCore:Notify', src, 'You have full pockets.', 'error')
         end
     else
-        QBCore.Functions.Notify('you dont catch any fish', 'error', 7500)
+        TriggerClientEvent('QBCore:Notify', src, 'you dont catch any fish.', 'error')
     end
 end)
 
@@ -49,7 +49,7 @@ RegisterNetEvent('mt-fishing:server:ComprarCana', function(data)
 
     if Player.Functions.AddItem(Item, quantity) then
         Player.Functions.RemoveMoney(cash, price)
-        QBCore.Functions.Notify('You buy a Fishing Rod', 'primary', 7500)
+	TriggerClientEvent('QBCore:Notify', src, 'You buy a Fishing Rod.', 'primary')
     end
 end)
 
@@ -63,7 +63,7 @@ RegisterNetEvent('mt-fishing:server:ComprarIsco', function(data)
 
     if Player.Functions.AddItem(Item, quantity) then
         Player.Functions.RemoveMoney(cash, price)
-        QBCore.Functions.Notify('You buy a Fishing Bait', 'primary', 7500)
+	TriggerClientEvent('QBCore:Notify', src, 'You buy a Fishing Bait.', 'primary')		
     end
 end)
 
