@@ -72,6 +72,41 @@ to ped models
 	['peixe_pesca'] 			 = {['name'] = 'peixe_pesca', 				['label'] = 'Fish', 				['weight'] = 100, 		['type'] = 'item', 		['image'] = 'fish.png', 		['unique'] = false, 		['useable'] = false, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = ''},
 	['peixe_exotico_pesca'] 			 = {['name'] = 'peixe_exotico_pesca', 				['label'] = 'Exotic Fish', 				['weight'] = 100, 		['type'] = 'item', 		['image'] = 'fishingshark.png', 		['unique'] = false, 		['useable'] = false, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = ''},
 ```
+# Add to qb-core/client/functions.lua
+```
+function QBCore.Functions.SpawnObject(model, coords, cb)
+    local model = (type(model) == 'number' and model or GetHashKey(model))
+
+    Citizen.CreateThread(function()
+        RequestModel(model)
+        local obj = CreateObject(model, coords.x, coords.y, coords.z, true, false, true)
+        SetModelAsNoLongerNeeded(model)
+
+        if cb then
+            cb(obj)
+        end
+    end)
+end
+
+function QBCore.Functions.SpawnLocalObject(model, coords, cb)
+    local model = (type(model) == 'number' and model or GetHashKey(model))
+
+    Citizen.CreateThread(function()
+        RequestModel(model)
+        local obj = CreateObject(model, coords.x, coords.y, coords.z, false, false, true)
+        SetModelAsNoLongerNeeded(model)
+
+        if cb then
+            cb(obj)
+        end
+    end)
+end
+
+function QBCore.Functions.DeleteObject(object)
+    SetEntityAsMissionEntity(object, false, true)
+    DeleteObject(object)
+end
+```
 
 # Dependencies
 qb-core: https://github.com/qbcore-framework/qb-core 
