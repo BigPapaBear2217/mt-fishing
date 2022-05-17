@@ -99,7 +99,7 @@ RegisterNetEvent('mt-fishing:server:RemoverDinheiroAluger', function()
 	local src = source
 	local cash = 'bank'
 	local price = 1000
-	local Player = QBCore.Functions.getPlayer(src)
+	local Player = QBCore.Functions.GetPlayer(src)
 		
 	Player.Functions.RemoveMoney(cash, price)
 end)
