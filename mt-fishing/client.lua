@@ -124,6 +124,8 @@ RegisterNetEvent('mt-fishing:client:ComecarPesca', function(data)
             local pedPos = GetEntityCoords(ped)
             local fishingRodHash = `prop_fishing_rod_01`
             local bone = GetPedBoneIndex(ped, 18905)
+					
+	    Wait(500)
             RequestAnimDict(animDict)
 			while not HasAnimDictLoaded(animDict) do
 				Wait(100)
