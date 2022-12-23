@@ -10,14 +10,14 @@ RegisterNetEvent('mt-fishing:client:MenuCompras', function(data)
         },
         {
             header = "Fishing Rod",
-            txt = "Price: <br> 100$",
+            txt = "Price: <br> 2500$",
             params = {
                 event = "mt-fishing:client:ComprarCana",
             }
         },
         {
             header = "Fishing Bait",
-            txt = "Price: <br> 10$",
+            txt = "Price: <br> 500$",
             params = {
                 event = "mt-fishing:client:ComprarIsco",
             }
@@ -55,7 +55,7 @@ RegisterNetEvent('mt-fishing:client:AlugarBarco', function(data)
     TriggerServerEvent('mt-fishing:server:RemoverDinheiroAluger')
     QBCore.Functions.SpawnVehicle(vehicle, function(veh)
         SetVehicleNumberPlateText(veh, "FISH"..tostring(math.random(1000, 9999)))
-        exports['LegacyFuel']:SetFuel(veh, 100.0)
+        exports['cdn-fuel']:SetFuel(veh, 100.0)
         --SetEntityHeading(veh, coords.h)
         TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
@@ -110,48 +110,60 @@ RegisterNetEvent('mt-fishing:client:VenderPeixe', function(data)
     TriggerServerEvent('mt-fishing:server:VenderPeixe')
 end)
 
-
-RegisterNetEvent('mt-fishing:client:ComecarPesca', function(data)
-    local ped = PlayerPedId()
-    local time = math.random(1000, 5000)
-    local pos = GetEntityCoords(ped)
-
-    QBCore.Functions.TriggerCallback('QBCore:HasItem', function(HasItem)
-        if HasItem and GetWaterHeight(pos.x, pos.y, pos.z-2, pos.z - 3.0) then
-            local ped = PlayerPedId()
-            local animDict = "amb@world_human_stand_fishing@idle_a"
-            local animName = "idle_c" 
-            local pedPos = GetEntityCoords(ped)
-            local fishingRodHash = `prop_fishing_rod_01`
-            local bone = GetPedBoneIndex(ped, 18905)
-					
-	    Wait(500)
-            RequestAnimDict(animDict)
-			while not HasAnimDictLoaded(animDict) do
-				Wait(100)
-			end
-			TaskPlayAnim(ped, animDict, animName, 1.0, -1.0, 1.0, 11, 0, 0, 0, 0)   
-            rodHandle = CreateObject(fishingRodHash, pedPos, true)
-            AttachEntityToEntity(rodHandle, ped, bone, 0.1, 0.05, 0, 80.0, 120.0, 160.0, true, true, false, true, 1, true)
-            Wait(time)
-            local success = exports['qb-lock']:StartLockPickCircle(5,20)
-            if success then
-                TriggerServerEvent('mt-fishing:server:DarPeixe')
-                ClearPedTasks(ped)
-                DeleteObject(rodHandle)
-                DeleteEntity(fishingRodHash)
-            else
-                TriggerServerEvent('mt-fishing:server:PerderIsco')
-                QBCore.Functions.Notify('The fish scape...', 'error', 7500)
-                ClearPedTasks(ped)
-                DeleteObject(rodHandle)
-                DeleteEntity(fishingRodHash)
-            end
-        else
+local alreadyFishing = false
+RegisterNetEvent('mt-fishing:client:ComecarPesca', function(data) 
+    local HasItem = QBCore.Functions.HasItem('isco_pesca')
+    if not HasItem then
         QBCore.Functions.Notify("You dont have any fishing bait or not near water...", "error")
+        return
+    end
+
+    if alreadyFishing then
+        QBCore.Functions.Notify("You are already fishing!", "error")
+        return
+    end
+
+    local time = math.random(1000, 5000)
+    local ped = PlayerPedId()
+    local pos = GetEntityCoords(ped)
+    alreadyFishing = true
+
+    if GetWaterHeight(pos.x, pos.y, pos.z-2, pos.z - 3.0) then
+        hasStartedFishing = true
+        local ped = PlayerPedId()
+        local animDict = "amb@world_human_stand_fishing@idle_a"
+        local animName = "idle_c" 
+        local pedPos = GetEntityCoords(ped)
+        local fishingRodHash = `prop_fishing_rod_01`
+        local bone = GetPedBoneIndex(ped, 18905)
+                
+        Wait(500)
+        RequestAnimDict(animDict)
+        while not HasAnimDictLoaded(animDict) do
+            Wait(100)
         end
-      end, 'isco_pesca')
+        TaskPlayAnim(ped, animDict, animName, 1.0, -1.0, 1.0, 11, 0, 0, 0, 0)   
+        rodHandle = CreateObject(fishingRodHash, pedPos, true)
+        AttachEntityToEntity(rodHandle, ped, bone, 0.1, 0.05, 0, 80.0, 120.0, 160.0, true, true, false, true, 1, true)
+        Wait(time)
+        local success = exports['qb-lock']:StartLockPickCircle(5,20)
+        if success then
+            TriggerServerEvent('mt-fishing:server:DarPeixe')
+            ClearPedTasks(ped)
+            DeleteObject(rodHandle)
+            DeleteEntity(fishingRodHash)
+        else
+            TriggerServerEvent('mt-fishing:server:PerderIsco')
+            QBCore.Functions.Notify('The fish scape...', 'error', 7500)
+            ClearPedTasks(ped)
+            DeleteObject(rodHandle)
+            DeleteEntity(fishingRodHash)
+        end
+        alreadyFishing = false
+    end
 end)
+
+       
 
 -- Threads
 Citizen.CreateThread(function()
